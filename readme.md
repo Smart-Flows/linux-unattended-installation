@@ -80,5 +80,5 @@ This will trigger hhe unattended installation. Be aware the setup will start wit
 When the installation finishes, the machine stops. Remove the usb disk and power-on the machine. You can (remote) log into it as `root` using the ssh key you selected when creating the ISO. If you did not select a different key, you will have to use the `ssh/id_rsa` to log into it, using:
 
 ```sh
-ssh -i ssh/id_rsa root@<IP ADDRESS>
+ssh -o IdentitiesOnly=yes -i ssh/id_rsa root@<IP ADDRESS>
 ```
