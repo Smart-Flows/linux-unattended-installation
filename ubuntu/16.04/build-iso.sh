@@ -1,12 +1,16 @@
 #!/bin/bash
-set -e
+
+set -o nounset  # exit the script if we try to use an uninitialized variable
+set -o errexit  # exit the script if one of the commands fail
+
+readonly SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # lookup specific binaries
 : "${BIN_7Z:=$(type -P 7z)}"
 : "${BIN_XORRISO:=$(type -P xorriso)}"
 
 # get parameters
-SSH_PUBLIC_KEY_FILE=${1:-"$HOME/.ssh/id_rsa.pub"}
+SSH_PUBLIC_KEY_FILE=${1:-"$SCRIPT_DIR/../../ssh/id_rsa.pub"}
 TARGET_ISO=${2:-"`pwd`/ubuntu-16.04-netboot-amd64-unattended.iso"}
 
 # check if ssh key exists
@@ -18,7 +22,6 @@ fi
 
 # get directories
 CURRENT_DIR="`pwd`"
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 TMP_DOWNLOAD_DIR="`mktemp -d`"
 TMP_DISC_DIR="`mktemp -d`"
 TMP_INITRD_DIR="`mktemp -d`"
